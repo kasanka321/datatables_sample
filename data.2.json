@@ -1,6 +1,11 @@
 {
-    "id": "2",
-    "title": "トイレットペーパーを買う",
-    "detail": "ダブル、１６ロール入りを２袋。",
-    "finished": false
+  "id": "2",
+  "men": "1面",
+  "men_id": 1,
+  "title": "IOCバッハ会長の話が長い",
+  "gyo_num": 33,
+  "published_date": "2021-11-01",
+  "finished": true,
+  "update_date": "2021-11-01 18:35",
+  "note": "備考です"
 }

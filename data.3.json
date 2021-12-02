@@ -1,6 +1,11 @@
 {
-    "id": "3",
-    "title": "古い電子レンジを捨てる",
-    "detail": "市のゴミ収集係の電話番号 XX-XXXX-XXXX",
-    "finished": false
+  "id": "3",
+  "men": "経済",
+  "men_id": 2,
+  "title": "IOCバッハ会長の経済効果は凄い",
+  "gyo_num": 44,
+  "published_date": "2021-11-01",
+  "finished": false,
+  "update_date": "2021-11-01 18:35",
+  "note": "備考です"
 }

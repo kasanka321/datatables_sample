@@ -22,32 +22,32 @@
               <label class="btn btn-secondary">
                 <input type="radio" id="men_name1" name="men_name"> １面
               </label>
-              <label class="btn btn-secondary">
+              <label class="btn select btn-secondary">
                 <input type="radio" id="men_name2" name="men_name"> 経済
               </label>
-              <label class="btn btn-secondary">
+              <label class="btn select btn-secondary">
                 <input type="radio" id="men_name3" name="men_name"> くらし
               </label>
-              <label class="btn btn-secondary">
+              <label class="btn select btn-secondary">
                 <input type="radio" id="men_name4" name="men_name"> 文化
               </label>
-              <label class="btn btn-secondary">
+              <label class="btn select btn-secondary">
                 <input type="radio" id="men_name5" name="men_name"> 農業
               </label>
-              <label class="btn btn-secondary active">
+              <label class="btn select btn-secondary active">
                 <input type="radio" id="men_name6" name="men_name"> 全部
               </label>
             </div>
             &ensp;            
             &ensp;
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-              <label class="btn btn-secondary">
+              <label class="btn select btn-secondary">
                 <input type="radio" id="finish_desk1" name="finish_desk"> 未
               </label>
-              <label class="btn btn-secondary">
+              <label class="btn select btn-secondary">
                 <input type="radio" id="finish_desk2" name="finish_desk"> 済
               </label>
-              <label class="btn btn-secondary active">
+              <label class="btn select btn-secondary active">
                 <input type="radio" id="finish_desk3" name="finish_desk"> 全
               </label>
             </div>
@@ -155,7 +155,7 @@
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
     <style>
-      button {
+      button.select,button.yes,button.no {
         border-radius:3px;
         color: white;
         font-weight: bold;
@@ -395,6 +395,7 @@
             }else{
               myTable.cell(prow,finishColumn).data(true);
             }
+            $('#dataTable').DataTable().draw(); //フィルター適用のため再描画
 
 
             // $.ajax({

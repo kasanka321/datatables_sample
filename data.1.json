@@ -1,6 +1,11 @@
 {
     "id": "1",
-    "title": "町内会の会合ですよ",
-    "detail": "A町民館 B日19:00から",
-    "finished": true
+    "men": "1面",
+    "men_id": 1,
+    "title": "IOCバッハ会長の話が長い",
+    "gyo_num": 33,
+    "published_date": "11/01",
+    "finished": false,
+    "update_date": "11/01 18:35",
+    "note": "備考です"
 }

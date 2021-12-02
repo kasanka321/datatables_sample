@@ -8,18 +8,62 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <title>DataTables で データベースアプリを作る</title>
+    <title>DataTablesで簡易アプリ</title>
 </head>
 
 <body>
     <div class="container">
-        <div class="row">
+        <div>
             <a class="popup btn btn-primary" data-id="" href="#" style="margin:5px">新規登録</a>
+            &ensp;&ensp;
+
+            <!-- フィルター用のボタン -->
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-secondary">
+                <input type="radio" id="men_name1" name="men_name"> １面
+              </label>
+              <label class="btn btn-secondary">
+                <input type="radio" id="men_name2" name="men_name"> 経済
+              </label>
+              <label class="btn btn-secondary">
+                <input type="radio" id="men_name3" name="men_name"> くらし
+              </label>
+              <label class="btn btn-secondary">
+                <input type="radio" id="men_name4" name="men_name"> 文化
+              </label>
+              <label class="btn btn-secondary">
+                <input type="radio" id="men_name5" name="men_name"> 農業
+              </label>
+              <label class="btn btn-secondary active">
+                <input type="radio" id="men_name6" name="men_name"> 全部
+              </label>
+            </div>
+            &ensp;            
+            &ensp;
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-secondary">
+                <input type="radio" id="finish_desk1" name="finish_desk"> 未
+              </label>
+              <label class="btn btn-secondary">
+                <input type="radio" id="finish_desk2" name="finish_desk"> 済
+              </label>
+              <label class="btn btn-secondary active">
+                <input type="radio" id="finish_desk3" name="finish_desk"> 全
+              </label>
+            </div>
+
+
         </div>
         <div class="row">
             <table id="dataTable" class="table-sm table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
                     <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -58,7 +102,7 @@
                         <div class="form-group row">
                             <label for="title" class="control-label col-sm-2">備考</label>
                             <div class="col-sm-10">
-                                <input type="textarea" class="form-control" name="detail" id="detail" placeholder="備考を入力します" />
+                                <input type="textarea" class="form-control" name="note" id="note" placeholder="備考を入力します" />
                             </div>
                         </div>
                         <div class="form-group row">
@@ -91,26 +135,88 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <style>
+      button {
+        border-radius:3px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        margin:5px;
+      }      
+      /* bootstrapでのトグルボタンの色を変える */
+      /* https://stackoverflow.com/questions/48753207/custom-color-of-toggle-buttons */
+      .active {
+        background-color: green !important;
+      }
+
+      /* 「未・済」buttonをhover時に大きく */
+      button.yes:hover,button.no:hover {
+          animation: big 0.1s;
+          animation-fill-mode: forwards;    
+      }
+      @keyframes big 
+      {
+        0% {transform: scale(1); }
+        100% {transform: scale(1.2);}
+      }
+
+    </style>
+
     <script type="text/javascript">
 
         var myTable;
-        $(document).ready(function () {
+        // 列の番号
+        const men_idColumn = 2;
+        const finishColumn = 6;
 
+        $(document).ready(function () {
             // Datatableの設定
             myTable = $("#dataTable").DataTable({
                 columns: [{
                     data: "id",
                     class: "right",
                     width: "20",
+                    "visible": false, //不可視の列
                 }, {
-                    data: "title",
-                    title: "タイトル",
+                    data: "men",
+                    title: "面",
+                    orderData:[men_idColumn], //並び順を別の列準拠にする
                 }, {
-                    data: "finished",
-                    width: "20",
-                    render: function (data) {
-                        return data ? '済' : '未';
-                    },
+                    data: "men_id",
+                    title: "面id",
+                    "visible": false, //不可視の列
+                }, {
+                  data: "title",
+                  title: "見出し",
+                }, {
+                  data: "gyo_num",
+                  title: "行数",
+                }, {
+                  data: "published_date",
+                  title: "掲載日",
+                }, {
+                  data: "finished",
+                  title: "校了",
+                  width: "20",
+                  "render": function (data, type, row, meta) {
+                      var tagText = '';
+                      switch (data) {
+                          case true:
+                              tagText = '<button class="yes btn-primary" onclick="btnClick(this)">'
+                                  + '済' + '</button>'
+                              break;
+                          default:
+                              tagText = '<button class="no btn-danger" onclick="btnClick(this)">'
+                                  + '未' + '</button>'
+                      }
+                      return type === "type" ? "html" : tagText;
+                  }
+                }, {
+                  data: "update_date",
+                  title: "更新日",
+                }, {
+                  data: "note",
+                  title: "備考",
                 }, {
                     data: "id",
                     orderable: false,
@@ -124,7 +230,7 @@
                     url: 'data.json'
                 },
                 // 初期の並び順設定
-                order: [0, 'desc'],
+                order: [men_idColumn, 'asc'],
 
                 // ローカライズファイル設定
                 language: {
@@ -172,7 +278,7 @@
                     })
                         .done(function (data) {
                             $('input[name="title"]').val(data.title);
-                            $('input[name="detail"]').val(data.detail);
+                            $('input[name="note"]').val(data.note);
                             $('input[name="finished"]').prop('checked', data.finished);
                         })
                 }
@@ -227,7 +333,66 @@
 
 
         })
+
+        // トグルボタンによるフィルター(men)
+        $('[name="men_name"]:radio').change( function() {
+            if($('[id=men_name1]').prop('checked')){
+              myTable.columns(men_idColumn).search(1).draw();
+            } else if ($('[id=men_name2]').prop('checked')) {
+              myTable.columns(men_idColumn).search(2).draw();
+            } else if ($('[id=men_name3]').prop('checked')) {
+              myTable.columns(men_idColumn).search(3).draw();
+            } else if ($('[id=men_name4]').prop('checked')) {
+              myTable.columns(men_idColumn).search(4).draw();
+            } else if ($('[id=men_name5]').prop('checked')) {
+              myTable.columns(men_idColumn).search(5).draw();
+            } else if ($('[id=men_name6]').prop('checked')) {
+              myTable.columns(men_idColumn).search("").draw();
+            } 
+        });
+
+
+        // トグルボタンによるフィルター(finish)
+        $('[name="finish_desk"]:radio').change( function() {
+            if($('[id=finish_desk1]').prop('checked')){
+              myTable.columns(finishColumn).search("未" ).draw();
+            } else if ($('[id=finish_desk2]').prop('checked')) {
+              myTable.columns(finishColumn).search("済" ).draw();
+            } else if ($('[id=finish_desk3]').prop('checked')) {
+                myTable.columns(finishColumn).search("" ).draw();
+            } 
+        });
+
+        // 「未」「済」ボタン押下時
+       function btnClick(button) {
+            var prow = button.parentNode.parentNode;
+            var rdata = $('#dataTable').DataTable().row(prow).data();
+            let tmp_finished = rdata.finished;
+            if(tmp_finished){
+              myTable.cell(prow,finishColumn).data(false);
+            }else{
+              myTable.cell(prow,finishColumn).data(true);
+            }
+            alert("プログラムで未と済を切り替えていますが、本来はajaxで切り替わります(未実装)");
+
+
+            // $.ajax({
+            //     url: 'ajax.php',
+            //     dataType: 'json',
+            //     data: {
+            //     },
+            //     type: 'GET',
+            // }).done(function(data, textStatus, jqXHR){
+            //   // 成功の場合の処理
+            //   //再読み込み処理 ページ移動をしない
+            //   myTable.ajax.reload(null, false);
+            
+            // }).fail(function(jqXHR, textStatus, errorThrown){
+            //   // エラーの場合処理
+            // })
+        }
     </script>
+
 </body>
 
 </html>

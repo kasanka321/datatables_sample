@@ -243,6 +243,11 @@
                         return '<a class="popup btn btn-info" data-id=' + data + ' href="#">&#x270f;</a>'
                     }
                 }],
+                // ページングではなく縦スクロール
+                paging: false,
+                "scrollY": "73vh",
+                scrollCollapse: true,
+
                 // データソースの設定
                 // [WebAPI 取得（一覧）に対応]
                 ajax: {

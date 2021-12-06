@@ -42,10 +42,10 @@
             &ensp;
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
               <label class="btn select btn-secondary">
-                <input type="radio" id="finish_desk1" name="finish_desk"> 未
+                <input type="radio" id="finish_desk1" name="finish_desk"> 未了
               </label>
               <label class="btn select btn-secondary">
-                <input type="radio" id="finish_desk2" name="finish_desk"> 済
+                <input type="radio" id="finish_desk2" name="finish_desk"> 校了
               </label>
               <label class="btn select btn-secondary active">
                 <input type="radio" id="finish_desk3" name="finish_desk"> 全
@@ -165,10 +165,10 @@
       /* bootstrapでのトグルボタンの色を変える */
       /* https://stackoverflow.com/questions/48753207/custom-color-of-toggle-buttons */
       .active {
-        background-color: green !important;
+        background-color: darkcyan !important;
       }
 
-      /* 「未・済」buttonをhover時に大きく */
+      /* 「未了・校了」buttonをhover時に大きく */
       button.yes:hover,button.no:hover {
           animation: big 0.1s;
           animation-fill-mode: forwards;    
@@ -216,17 +216,17 @@
                 }, {
                   data: "finished",
                   title: "校了",
-                  width: "20",
+                  width: "50",
                   "render": function (data, type, row, meta) {
                       var tagText = '';
                       switch (data) {
                           case true:
                               tagText = '<button class="yes btn-primary" onclick="btnClick(this)">'
-                                  + '済' + '</button>'
+                                  + '校了' + '</button>'
                               break;
                           default:
                               tagText = '<button class="no btn-danger" onclick="btnClick(this)">'
-                                  + '未' + '</button>'
+                                  + '未了' + '</button>'
                       }
                       return type === "type" ? "html" : tagText;
                   }
@@ -380,17 +380,17 @@
         // トグルボタンによるフィルター(finish)
         $('[name="finish_desk"]:radio').change( function() {
             if($('[id=finish_desk1]').prop('checked')){
-              myTable.columns(finishColumn).search("未" ).draw();
+              myTable.columns(finishColumn).search("未了" ).draw();
             } else if ($('[id=finish_desk2]').prop('checked')) {
-              myTable.columns(finishColumn).search("済" ).draw();
+              myTable.columns(finishColumn).search("校了" ).draw();
             } else if ($('[id=finish_desk3]').prop('checked')) {
                 myTable.columns(finishColumn).search("" ).draw();
             } 
         });
 
-        // 「未」「済」ボタン押下時
+        // 「未了」「校了」ボタン押下時
        function btnClick(button) {
-            // プログラムで未と済を切り替えていますが、本来はajaxで切り替わります(未実装)
+            // プログラムで未了と校了を切り替えていますが、本来はajaxで切り替わります(未実装)
             // ajaxでの切り替わりは、具体的には、１．変更データをpostして更新　２．ajax.reloadする　をバックエンドで準備します
             var prow = button.parentNode.parentNode;
             var rdata = $('#dataTable').DataTable().row(prow).data();
